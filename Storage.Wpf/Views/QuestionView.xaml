@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Storage.Wpf.QuestionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Storage.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid HorizontalAlignment="Center" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding Question}" FontSize="16" Margin="10" />
+
+        <UniformGrid Grid.Row="1" Columns="{Binding ButtonCount}" HorizontalAlignment="Right">
+            <Button Command="{Binding YesCommand}" Visibility="{Binding ShowYesButton, Converter={StaticResource BoolToVisibility}}" 
+                    Margin="10" Padding="5" FontSize="16" >Да</Button>
+            <Button Command="{Binding NoCommand}" Visibility="{Binding ShowNoButton, Converter={StaticResource BoolToVisibility}}" 
+                    Margin="10" Padding="5" FontSize="16">Нет</Button>
+            <Button Command="{Binding CancelCommand}" Visibility="Collapsed" 
+                    Margin="10" Padding="5" FontSize="16">Отмена</Button>
+        </UniformGrid>
+    </Grid>
+</UserControl>

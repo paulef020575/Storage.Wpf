@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Storage.Wpf.WorkspaceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Storage.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Storage.Wpf;component/Resources/WorkspaceResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="MainBackgroundColor" Color="BlueViolet" />
+            <DataTemplate x:Key="MenuItemTemplate">
+                <Grid>
+                    <Grid.Resources>
+                        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+                    <Button Background="PowderBlue" Command="{Binding Command}" Height="50" Margin="10 10 10 10" Grid.Row="0"
+                                    Visibility="{Binding NotSeparator, Converter={StaticResource BoolToVisConverter}}">
+                        <Button.Effect>
+                            <DropShadowEffect />
+                        </Button.Effect>
+                        <TextBlock Text="{Binding Title}" />
+                    </Button>
+                    <Expander Header="{Binding Title}" Visibility="{Binding IsCommandGroup, Converter={StaticResource BoolToVisConverter}}"
+                              Margin="10" HorizontalContentAlignment="Stretch" Name="groupExpander" BorderThickness="2"
+                              Background="{StaticResource MainBackgroundColor}" BorderBrush="{StaticResource MainBackgroundColor}">
+                        <Expander.HeaderTemplate>
+                            <DataTemplate>
+                                    <TextBlock FontWeight="SemiBold" Foreground="White" Text="{Binding}" Margin="5" FontSize="14"/>
+                            </DataTemplate>
+                        </Expander.HeaderTemplate>
+                        <ItemsControl ItemsSource="{Binding Subitems}" ItemTemplate="{DynamicResource MenuItemTemplate}" Background="White" />
+                    </Expander>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left" Width="300">
+            <TextBlock Text="Opti-Storage" Background="{StaticResource MainBackgroundColor}" Foreground='White' FontSize="24" FontWeight="Bold" Padding="10"/>
+            <ItemsControl ItemsSource="{Binding CommandList}" HorizontalContentAlignment="Stretch" ItemTemplate="{DynamicResource MenuItemTemplate}" />
+        </StackPanel>
+        <ContentPresenter Content="{Binding Workspace}" />
+    </DockPanel>
+</UserControl>
