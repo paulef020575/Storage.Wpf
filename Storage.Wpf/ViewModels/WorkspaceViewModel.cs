@@ -47,6 +47,8 @@ namespace Storage.Wpf
             references.Add("Виды продукции", param => { ChangeWorkspace(new RefTypeProdViewModel()); });
             references.Add("Породы", param => { ChangeWorkspace(new RefSpeciesViewModel()); });
             references.Add("Сорта", param => { ChangeWorkspace(new RefGradeViewModel()); });
+            references.Add("Склады", param => { ChangeWorkspace(new RefStoreViewModel()); });
+            references.Add("Номенклатура", param => { ChangeWorkspace(new RefNomenclatureViewModel()); });
 
             CommandList.Add(references);
             CommandList.Add(new CommandViewModel("Выход", param => Exit()));

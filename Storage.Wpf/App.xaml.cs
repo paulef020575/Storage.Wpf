@@ -18,8 +18,8 @@ namespace Storage.Wpf
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            MigrationHelper.Execute(Settings.Default.ConnectionString, Logger);
-            Database.ConnectionString = Settings.Default.ConnectionString;
+            MigrationHelper.Execute(Settings.Default.ConnectionString2, Logger);
+            Database.ConnectionString = Settings.Default.ConnectionString2;
         }
 
         private void Logger(string s)

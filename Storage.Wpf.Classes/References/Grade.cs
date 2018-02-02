@@ -18,6 +18,26 @@ namespace Storage.Wpf.Classes
 
         public virtual bool IsTop { get; set; }
 
+        public virtual IList<Store> StoreGrade { get; protected set; }
+
+        #endregion
+
+        #region Constructor
+
+        public Grade()
+        {
+            StoreGrade = new List<Classes.Store>();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
         #endregion
     }
 }

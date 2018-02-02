@@ -59,6 +59,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\Entities\EntityView.xaml.cs">
+      <DependentUpon>EntityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Entities\NomenclatureView.xaml.cs">
+      <DependentUpon>NomenclatureView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Entities\NomenclatureViewModel.cs" />
+    <Compile Include="ViewModels\References\RefNomenclatureViewModel.cs" />
     <Compile Include="ViewModels\References\RefStoreViewModel.cs" />
     <Compile Include="Views\Entities\StoreView.xaml.cs">
       <DependentUpon>StoreView.xaml</DependentUpon>
@@ -96,6 +104,14 @@
     <Compile Include="Views\WorkspaceView.xaml.cs">
       <DependentUpon>WorkspaceView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Entities\EntityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Entities\NomenclatureView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Entities\StoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

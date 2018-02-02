@@ -17,5 +17,10 @@ namespace Storage.Wpf.Classes
         public virtual string Name { get; set; }
 
         #endregion
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

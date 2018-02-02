@@ -43,5 +43,20 @@ namespace Storage.Wpf.Classes
                     item.PropertyChanged -= value;
             }
         }
+
+
+        public void Save(IList<T> itemList)
+        {
+            foreach (EntityIncluded<T> item in this)
+            {
+                if (item.IsIncluded && !itemList.Contains(item.Entity))
+                    itemList.Add(item.Entity);
+
+                if (!item.IsIncluded && itemList.Contains(item.Entity))
+                    itemList.Remove(item.Entity);
+            }
+        }
     }
+
+
 }

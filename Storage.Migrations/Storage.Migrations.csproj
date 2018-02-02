@@ -57,6 +57,8 @@
     <Compile Include="Migrations\M201801\M201801232230_StoreSpecies.cs" />
     <Compile Include="Migrations\M201801\M201801292335_AddMaxCountFieldToStore.cs" />
     <Compile Include="Migrations\M201801\M_201801132200.cs" />
+    <Compile Include="Migrations\M201802\M201802021300_AddStoreGrade.cs" />
+    <Compile Include="Migrations\M201802\M201802021430_CreateNomenclature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

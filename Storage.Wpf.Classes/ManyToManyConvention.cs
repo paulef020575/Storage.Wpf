@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using FluentNHibernate.Conventions.Instances;
 using System.Diagnostics;
 using FluentNHibernate.Conventions.Inspections;
+using FluentNHibernate;
+using System.Reflection;
 
 namespace Storage.Wpf.Classes.Conventions
 {
@@ -43,4 +45,22 @@ namespace Storage.Wpf.Classes.Conventions
         }
     }
 
+    public class CustomForeignKeyConvention : ForeignKeyConvention
+    {
+        protected override string GetKeyName(Member property, Type type)
+        {
+            if (property == null)
+                return "Id" + type.Name;
+
+            return "Id" + property.Name; 
+        }
+
+        protected string GetKeyName(PropertyInfo property, Type type)
+        {
+            if (property == null)
+                return "ID" + type.Name;  // many-to-many, one-to-many, join
+
+            return "ID" + property.Name; // many-to-one
+        }
+    }
 }

@@ -275,6 +275,22 @@ namespace Storage.Wpf
             }
         }
 
+        private EntityIncludedList<Grade> gradeList;
+        public EntityIncludedList<Grade> GradeList
+        {
+            get
+            {
+                if (gradeList == null)
+                {
+                    gradeList = new EntityIncludedList<Grade>(Store.StoreGrade);
+                    gradeList.PropertyChanged += (e, PropertyChangedEventArgs) => SetAsModified();
+                }
+
+                return gradeList;
+            }
+           
+        }
+
         #endregion
 
         public StoreViewModel() { }
@@ -287,20 +303,9 @@ namespace Storage.Wpf
 
         protected override void Save()
         {
-            foreach (var item in SpeciesList)
-            {
-                if (item.IsIncluded && !Store.StoreSpecies.Contains(item.Entity))
-                {
-                    Store.StoreSpecies.Add(item.Entity);
-                    item.Entity.StoreSpecies.Add(Store);
-                }
+            SpeciesList.Save(Store.StoreSpecies);
+            GradeList.Save(Store.StoreGrade);
 
-                if (!item.IsIncluded && Store.StoreSpecies.Contains(item.Entity))
-                {
-                    Store.StoreSpecies.Remove(item.Entity);
-                    item.Entity.StoreSpecies.Remove(Store);
-                }
-            }
             base.Save();
         }
     }

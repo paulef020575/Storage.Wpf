@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="Storage.Wpf.NomenclatureView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Storage.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="300"
+             d:DataContext="{d:DesignInstance local:NomenclatureViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Код" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
+        <TextBox Text="{Binding Code}" Grid.Row="0" Grid.Column="1" Margin="5" />
+
+        <TextBlock Text="Код внешней системы" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
+        <TextBox Text="{Binding ExternalCode}" Grid.Row="1" Grid.Column="1" Margin="5" />
+
+        <TextBlock Text="Порода" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
+        <ComboBox ItemsSource="{Binding SpeciesList}" SelectedItem="{Binding Species}" Grid.Row="2" Grid.Column="1" Margin="5" />
+
+        <TextBlock Text="Вид продукции" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
+        <ComboBox ItemsSource="{Binding TypeProdList}" SelectedItem="{Binding TypeProd}" Grid.Row="3" Grid.Column="1" Margin="5" />
+
+        <TextBlock Text="Сорт" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
+        <ComboBox ItemsSource="{Binding GradeList}" SelectedItem="{Binding Grade}" Grid.Row="4" Grid.Column="1" Margin="5" />
+
+        <TextBlock Text="Профиль (толщина х ширина)" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+            <TextBox Text="{Binding Height}" Width="75" Margin="5" TextAlignment="Right" />
+            <TextBlock Text="x" Margin="5" TextAlignment="Center" />
+            <TextBox Text="{Binding Width}" Width="75" Margin="5" TextAlignment="Right" />
+        </StackPanel>
+
+        <CheckBox IsChecked="{Binding Active}" Grid.Row="6" Grid.Column="1" Margin="5">активна</CheckBox>
+
+        <TextBlock Text="Требования" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
+        <TextBox Text="{Binding Request}" Grid.Row="7" Grid.Column="1" Width="75" Margin="5" HorizontalAlignment="Left" TextAlignment="Right"/>
+
+        <TextBlock Text="Влажность" Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right" Margin="5" />
+        <TextBox Text="{Binding Wethness}" Grid.Row="8" Grid.Column="1" Width="75" Margin="5" HorizontalAlignment="Left" TextAlignment="Right"/>
+    </Grid>
+</UserControl>

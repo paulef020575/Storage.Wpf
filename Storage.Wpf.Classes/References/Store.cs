@@ -27,6 +27,7 @@ namespace Storage.Wpf.Classes
         public virtual int HeightTo { get; set; }
 
         public virtual IList<Species> StoreSpecies { get; protected set; }
+        public virtual IList<Grade> StoreGrade { get; protected set; }
 
         public Store()
         {
@@ -39,6 +40,7 @@ namespace Storage.Wpf.Classes
             MaxPackageCount = 3;
 
             StoreSpecies = new List<Species>();
+            StoreGrade = new List<Grade>();
         }
     }
 }

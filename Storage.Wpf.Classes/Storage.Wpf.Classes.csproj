@@ -64,6 +64,7 @@
     <Compile Include="References\EntityIncludedList.cs" />
     <Compile Include="References\Enumeration.cs" />
     <Compile Include="References\Grade.cs" />
+    <Compile Include="References\Nomenclature.cs" />
     <Compile Include="References\Species.cs" />
     <Compile Include="References\Store.cs" />
     <Compile Include="References\TypeProd.cs" />

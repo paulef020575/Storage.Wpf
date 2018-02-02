@@ -27,10 +27,16 @@ namespace Storage.Wpf.Classes
                 {
                      Configuration cfg = Fluently.Configure().Database(MsSqlConfiguration.MsSql2012.ConnectionString(ConnectionString))
                         .Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<TypeProd>(new AutomappingConfiguration())
+                                                            .Conventions.Add<CustomForeignKeyConvention>()
                                                             .Override<Store>(map => map.HasManyToMany<Species>(store => store.StoreSpecies)
                                                                                     .Table("StoreSpecies").ParentKeyColumn("IdStore").ChildKeyColumn("IdSpecies"))
+                                                            .Override<Store>(map => map.HasManyToMany<Grade>(store => store.StoreGrade)
+                                                                                    .Table("StoreGrade").ParentKeyColumn("IdStore").ChildKeyColumn("IdGrade"))
                                                             .Override<Species>(map => map.HasManyToMany<Store>(species => species.StoreSpecies)
-                                                                                    .Table("StoreSpecies").ParentKeyColumn("IdStore").ChildKeyColumn("IdSpecies").Inverse())))
+                                                                                    .Table("StoreSpecies").ParentKeyColumn("IdStore").ChildKeyColumn("IdSpecies").Inverse())
+                                                            .Override<Grade>(map => map.HasManyToMany<Store>(store => store.StoreGrade)
+                                                                                    .Table("StoreGrade").ParentKeyColumn("IdStore").ChildKeyColumn("IdGrade").Inverse())
+                           ))
                                                             
                         .BuildConfiguration();
 

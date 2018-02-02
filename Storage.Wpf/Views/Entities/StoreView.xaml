@@ -7,8 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="323.796" d:DesignWidth="310.198"
              d:DataContext="{d:DesignInstance local:StoreViewModel}">
-    <DockPanel>
-        <Grid DockPanel.Dock="Top">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -26,13 +32,7 @@
             <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="5" />
         </Grid>
 
-        <UniformGrid Columns="3" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
-            <Button Margin="5" Padding="5" Command="{Binding OkCommand}">ОК</Button>
-            <Button Margin="5" Padding="5" Command="{Binding SaveCommand}">Сохранить</Button>
-            <Button Margin="5" Padding="5" Command="{Binding CloseCommand}">Закрыть</Button>
-        </UniformGrid>
-
-        <TabControl>
+        <TabControl Grid.Row="1">
             <TabItem Header="Основные свойства" Padding="5">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -114,9 +114,13 @@
                     </Grid>
 
                     <UniformGrid Columns="2">
-                        <DockPanel>
+                        <DockPanel Margin="5">
                             <TextBlock Text="Допустимые породы" DockPanel.Dock="Top" />
                             <DataGrid ItemsSource="{Binding SpeciesList}" HeadersVisibility="None" SelectionMode="Single" SelectionUnit="FullRow" />
+                        </DockPanel>
+                        <DockPanel Margin="5">
+                            <TextBlock Text="Допустимые сорта" DockPanel.Dock="Top" />
+                            <DataGrid ItemsSource="{Binding GradeList}" HeadersVisibility="None" SelectionMode="Single" SelectionUnit="FullRow" />
                         </DockPanel>
                     </UniformGrid>
 
@@ -124,6 +128,12 @@
             </TabItem>
         </TabControl>
 
+        <UniformGrid Columns="3" HorizontalAlignment="Right" Grid.Row="2">
+            <Button Margin="5" Padding="5" Command="{Binding OkCommand}">ОК</Button>
+            <Button Margin="5" Padding="5" Command="{Binding SaveCommand}">Сохранить</Button>
+            <Button Margin="5" Padding="5" Command="{Binding CloseCommand}">Закрыть</Button>
+        </UniformGrid>
 
-    </DockPanel>
+
+    </Grid>
 </UserControl>
