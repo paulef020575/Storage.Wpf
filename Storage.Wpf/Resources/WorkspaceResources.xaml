@@ -2,19 +2,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Storage.Wpf">
     <DataTemplate DataType="{x:Type local:TypeProdViewModel}">
-        <local:TypeProdView />
+        <local:EntityView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:RefTypeProdViewModel}">
         <local:ReferenceView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SpeciesViewModel}">
-        <local:SpeciesView />
+        <local:EntityView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:RefSpeciesViewModel}">
         <local:ReferenceView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:GradeViewModel}">
-        <local:GradeView />
+        <local:EntityView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:RefGradeViewModel}">
         <local:ReferenceView />
@@ -23,7 +23,7 @@
         <local:QuestionView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:StoreViewModel}">
-        <local:StoreView />
+        <local:EntityView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:RefStoreViewModel}">
         <local:ReferenceView />
@@ -32,6 +32,18 @@
         <local:ReferenceView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:NomenclatureViewModel}">
+        <local:EntityView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:RefCustomerViewModel}">
+        <local:ReferenceView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:CustomerViewModel}">
+        <local:EntityView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:RefRoadViewModel}">
+        <local:ReferenceView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:RoadViewModel}">
         <local:EntityView />
     </DataTemplate>
 </ResourceDictionary>

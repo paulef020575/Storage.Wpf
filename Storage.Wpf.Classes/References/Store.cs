@@ -29,6 +29,8 @@ namespace Storage.Wpf.Classes
         public virtual IList<Species> StoreSpecies { get; protected set; }
         public virtual IList<Grade> StoreGrade { get; protected set; }
 
+        public virtual IList<StoreCell> Cells { get; protected set; }
+
         public Store()
         {
             Type = 1;
@@ -41,6 +43,7 @@ namespace Storage.Wpf.Classes
 
             StoreSpecies = new List<Species>();
             StoreGrade = new List<Grade>();
+            Cells = new List<StoreCell>();
         }
     }
 }

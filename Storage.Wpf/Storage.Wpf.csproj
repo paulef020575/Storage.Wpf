@@ -59,6 +59,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\References\RefRoadViewModel.cs" />
+    <Compile Include="Views\Entities\RoadView.xaml.cs">
+      <DependentUpon>RoadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Entities\RoadViewModel.cs" />
+    <Compile Include="Views\Entities\CustomerView.xaml.cs">
+      <DependentUpon>CustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Entities\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\References\RefCustomerViewModel.cs" />
     <Compile Include="Views\Entities\EntityView.xaml.cs">
       <DependentUpon>EntityView.xaml</DependentUpon>
     </Compile>
@@ -104,6 +114,14 @@
     <Compile Include="Views\WorkspaceView.xaml.cs">
       <DependentUpon>WorkspaceView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Entities\RoadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Entities\CustomerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Entities\EntityView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

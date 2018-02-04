@@ -59,6 +59,9 @@
     <Compile Include="Migrations\M201801\M_201801132200.cs" />
     <Compile Include="Migrations\M201802\M201802021300_AddStoreGrade.cs" />
     <Compile Include="Migrations\M201802\M201802021430_CreateNomenclature.cs" />
+    <Compile Include="Migrations\M201802\M201802022130_createCustomer.cs" />
+    <Compile Include="Migrations\M201802\M201802041430_StoreCell.cs" />
+    <Compile Include="Migrations\M201802\M201802041600_StoreCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

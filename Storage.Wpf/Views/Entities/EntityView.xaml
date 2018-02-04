@@ -10,6 +10,24 @@
         <DataTemplate DataType="{x:Type local:NomenclatureViewModel}">
             <local:NomenclatureView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type local:GradeViewModel}">
+            <local:GradeView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:SpeciesViewModel}">
+            <local:SpeciesView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:StoreViewModel}">
+            <local:StoreView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:TypeProdViewModel}">
+            <local:TypeProdView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:CustomerViewModel}">
+            <local:CustomerView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:RoadViewModel}">
+            <local:RoadView />
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>

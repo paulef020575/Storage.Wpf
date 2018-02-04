@@ -11,7 +11,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <Grid Grid.Row="0">
@@ -126,14 +125,11 @@
 
                 </DockPanel>
             </TabItem>
+
+            <TabItem Header="Структура склада">
+                
+            </TabItem>
         </TabControl>
-
-        <UniformGrid Columns="3" HorizontalAlignment="Right" Grid.Row="2">
-            <Button Margin="5" Padding="5" Command="{Binding OkCommand}">ОК</Button>
-            <Button Margin="5" Padding="5" Command="{Binding SaveCommand}">Сохранить</Button>
-            <Button Margin="5" Padding="5" Command="{Binding CloseCommand}">Закрыть</Button>
-        </UniformGrid>
-
 
     </Grid>
 </UserControl>

@@ -291,6 +291,18 @@ namespace Storage.Wpf
            
         }
 
+        private StoreCell[,] cells;
+        public StoreCell[,] Cells
+        {
+            get
+            {
+                if (cells == null)
+                    FillCells(Store);
+
+                return cells;
+            }
+        }
+
         #endregion
 
         public StoreViewModel() { }
@@ -307,6 +319,38 @@ namespace Storage.Wpf
             GradeList.Save(Store.StoreGrade);
 
             base.Save();
+
+            if (Store.Cells.Count == 0)
+            {
+                Store.Cells.Add(new Classes.StoreCell()
+                {
+                    Code = 1,
+                    ExternalCode = "01",
+                    Store = this.Store,
+                    RowsCount = 1,
+                    ColumnsCount = 1,
+                    Active = true,
+                    IsVertical = false,
+                    X = 1,
+                    Y = 1
+                });
+
+                Repository<StoreCell> storeCellRepository = new Repository<StoreCell>();
+                storeCellRepository.Create(Store.Cells[0]);
+            }
         }
+
+        private void FillCells(Store store)
+        {
+            int rows = Store.Cells.Select(c => c.X).Max();
+            int columns = Store.Cells.Select(c => c.Y).Max();
+
+            cells = new StoreCell[rows, columns];
+
+            foreach (StoreCell cell in Store.Cells)
+                cells[cell.X, cell.Y] = cell;
+        }
+
+
     }
 }
