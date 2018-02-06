@@ -1,9 +1,11 @@
 ﻿using Storage.Wpf.Classes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Storage.Wpf.ViewModels.Entities;
 
 namespace Storage.Wpf
 {
@@ -291,8 +293,8 @@ namespace Storage.Wpf
            
         }
 
-        private StoreCell[,] cells;
-        public StoreCell[,] Cells
+        private ObservableCollection<StoreCellViewModel> cells;
+        public ObservableCollection<StoreCellViewModel> Cells
         {
             get
             {
@@ -301,6 +303,39 @@ namespace Storage.Wpf
 
                 return cells;
             }
+        }
+
+        private int rowCount = 2;
+
+        public int RowCount
+        {
+            get { return rowCount; }
+            set
+            {
+                if (rowCount != value)
+                {
+                    rowCount = value;
+                    FillCells(Store);
+                    OnPropertyChanged("Cells");
+                }
+            }
+        }
+
+        private int columnCount;
+
+        public int ColumnCount
+        {
+            get { return columnCount; }
+            set
+            {
+                if (columnCount != value)
+                {
+                    columnCount = value;
+                    FillCells(Store);
+                    OnPropertyChanged("Cells");
+                }
+            }
+
         }
 
         #endregion
@@ -325,14 +360,15 @@ namespace Storage.Wpf
                 Store.Cells.Add(new Classes.StoreCell()
                 {
                     Code = 1,
+                    Name = "группа 1",
                     ExternalCode = "01",
                     Store = this.Store,
                     RowsCount = 1,
                     ColumnsCount = 1,
                     Active = true,
                     IsVertical = false,
-                    X = 1,
-                    Y = 1
+                    X = 0,
+                    Y = 0
                 });
 
                 Repository<StoreCell> storeCellRepository = new Repository<StoreCell>();
@@ -342,13 +378,21 @@ namespace Storage.Wpf
 
         private void FillCells(Store store)
         {
-            int rows = Store.Cells.Select(c => c.X).Max();
-            int columns = Store.Cells.Select(c => c.Y).Max();
+            if (rowCount == 0) rowCount = Store.Cells.Select(c => c.X).Max() + 1;
+            if (columnCount == 0) columnCount = Store.Cells.Select(c => c.Y).Max() + 1;
 
-            cells = new StoreCell[rows, columns];
+            cells = new ObservableCollection<StoreCellViewModel>();
 
-            foreach (StoreCell cell in Store.Cells)
-                cells[cell.X, cell.Y] = cell;
+            for (int x = 0; x < rowCount; x++)
+                for (int y = 0; y < columnCount; y++)
+                {
+                    StoreCellViewModel viewModel = new StoreCellViewModel(x, y);
+                    StoreCell cell = Store.Cells.Where(c => c.X == x && c.Y == y).FirstOrDefault();
+                    if (cell != null)
+                        viewModel.SetItem(cell);
+
+                    cells.Add(viewModel);
+                }
         }
 
 

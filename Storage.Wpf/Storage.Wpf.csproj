@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\Entities\StoreCellViewModel.cs" />
     <Compile Include="ViewModels\References\RefRoadViewModel.cs" />
     <Compile Include="Views\Entities\RoadView.xaml.cs">
       <DependentUpon>RoadView.xaml</DependentUpon>

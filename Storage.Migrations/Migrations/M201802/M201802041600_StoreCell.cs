@@ -35,4 +35,19 @@ namespace Storage.Migrations
                 .WithColumn("Y").AsInt32().NotNullable().WithDefaultValue(1);
         }
     }
+
+    [Migration(201802061630)]
+    public class M201802061630_AlterStoreCell : Migration
+    {
+        public override void Down()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Up()
+        {
+            Alter.Table("StoreCell")
+                .AddColumn("Name").AsString(50).NotNullable().WithDefaultValue("");
+        }
+    }
 }

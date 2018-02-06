@@ -31,7 +31,7 @@
             <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="5" />
         </Grid>
 
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1" VerticalContentAlignment="Stretch">
             <TabItem Header="Основные свойства" Padding="5">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -127,8 +127,28 @@
             </TabItem>
 
             <TabItem Header="Структура склада">
-                
+                <ItemsControl ItemsSource="{Binding Cells}" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Background="Gold" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Grid.Row" Value="{Binding RowPosition}" />
+                            <Setter Property="Grid.Column" Value="{Binding ColumnPosition}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Title}" Margin="5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </TabItem>
+            
         </TabControl>
 
     </Grid>

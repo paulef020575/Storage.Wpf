@@ -11,6 +11,7 @@ namespace Storage.Wpf.Classes
         #region Properties
 
         public virtual int Code { get; set; }
+        public virtual string Name { get; set; }
         public virtual string ExternalCode { get; set; }
         public virtual Store Store { get; set; }
         public virtual int RowsCount { get; set; }
