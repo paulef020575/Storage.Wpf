@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Storage.Wpf.ViewModels.Entities;
 
 namespace Storage.Wpf
 {
@@ -388,8 +387,7 @@ namespace Storage.Wpf
                 {
                     StoreCellViewModel viewModel = new StoreCellViewModel(x, y);
                     StoreCell cell = Store.Cells.Where(c => c.X == x && c.Y == y).FirstOrDefault();
-                    if (cell != null)
-                        viewModel.SetItem(cell);
+                    viewModel.SetItem(cell);
 
                     cells.Add(viewModel);
                 }

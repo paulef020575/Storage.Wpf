@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Storage.Wpf.Classes;
 
-namespace Storage.Wpf.ViewModels.Entities
+namespace Storage.Wpf
 {
     public class StoreCellViewModel : EntityViewModel<StoreCell>
     {
@@ -14,6 +14,8 @@ namespace Storage.Wpf.ViewModels.Entities
         public override string Title => (StoreCell == null ? "не размечена" : StoreCell.Name);
 
         public StoreCell StoreCell => Entity as StoreCell;
+
+        public bool IsCell => (StoreCell != null);
 
         private int rowPosition;
 
@@ -40,6 +42,58 @@ namespace Storage.Wpf.ViewModels.Entities
                 {
                     StoreCell.Y = value;
                     OnPropertyChanged("ColumnPosition");
+                }
+            }
+        }
+
+        public int Code
+        {
+            get { return StoreCell.Code; }
+            set
+            {
+                if (StoreCell.Code != value)
+                {
+                    StoreCell.Code = value;
+                    OnPropertyChanged("Code");
+                }
+            }
+        }
+
+        public string Name
+        {
+            get { return StoreCell.Name; }
+            set
+            {
+                if (StoreCell.Name != value)
+                {
+                    StoreCell.Name = value;
+                    OnPropertyChanged("Name");
+                }
+            }
+        }
+
+        public string ExternalCode
+        {
+            get { return StoreCell.ExternalCode; }
+            set
+            {
+                if (StoreCell.ExternalCode != value)
+                {
+                    StoreCell.ExternalCode = value;
+                    OnPropertyChanged("ExternalCode");
+                }
+            }
+        }
+
+        public bool Active
+        {
+            get { return StoreCell.Active; }
+            set
+            {
+                if (StoreCell.Active != value)
+                {
+                    StoreCell.Active = value;
+                    OnPropertyChanged("Active");
                 }
             }
         }
