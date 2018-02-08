@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Storage.Wpf.ViewModels.Base;
 
 namespace Storage.Wpf
 {
@@ -292,8 +293,8 @@ namespace Storage.Wpf
            
         }
 
-        private ObservableCollection<StoreCellViewModel> cells;
-        public ObservableCollection<StoreCellViewModel> Cells
+        private ObservableCollection<IGridCell> cells;
+        public ObservableCollection<IGridCell> Cells
         {
             get
             {
@@ -304,18 +305,17 @@ namespace Storage.Wpf
             }
         }
 
-        private int rowCount = 2;
+        private int rowCount;
 
         public int RowCount
         {
-            get { return rowCount; }
+            get { return rowCount + 1; }
             set
             {
-                if (rowCount != value)
+                if (rowCount != value - 1)
                 {
-                    rowCount = value;
+                    rowCount = value - 1;
                     FillCells(Store);
-                    OnPropertyChanged("Cells");
                 }
             }
         }
@@ -324,17 +324,28 @@ namespace Storage.Wpf
 
         public int ColumnCount
         {
-            get { return columnCount; }
+            get { return columnCount + 1; }
             set
             {
-                if (columnCount != value)
+                if (columnCount != value - 1)
                 {
-                    columnCount = value;
+                    columnCount = value - 1;
                     FillCells(Store);
-                    OnPropertyChanged("Cells");
                 }
             }
 
+        }
+
+        public string StarColumns
+        {
+            get
+            {
+                string s = "1";
+                for (int i = 1; i < ColumnCount; i++)
+                    s += "," + (i + 1).ToString();
+
+                return s;
+            }
         }
 
         #endregion
@@ -346,6 +357,8 @@ namespace Storage.Wpf
             typeEnumeration = enumeration;
         }
 
+
+        #region Methods
 
         protected override void Save()
         {
@@ -380,7 +393,13 @@ namespace Storage.Wpf
             if (rowCount == 0) rowCount = Store.Cells.Select(c => c.X).Max() + 1;
             if (columnCount == 0) columnCount = Store.Cells.Select(c => c.Y).Max() + 1;
 
-            cells = new ObservableCollection<StoreCellViewModel>();
+            cells = new ObservableCollection<IGridCell>();
+
+            for (int x = 0; x < rowCount; x++)
+                cells.Add(new RowHeaderClass(x + 1));
+            
+            for (int y = 0; y < columnCount; y++)
+                cells.Add(new ColumnHeaderClass(y + 1));                            
 
             for (int x = 0; x < rowCount; x++)
                 for (int y = 0; y < columnCount; y++)
@@ -391,8 +410,91 @@ namespace Storage.Wpf
 
                     cells.Add(viewModel);
                 }
+
+            OnPropertyChanged("RowCount");
+            OnPropertyChanged("ColumnCount");
+            OnPropertyChanged("Cells");
+            OnPropertyChanged("StarColumns");
+
         }
 
+        private void EditCell(int cellId)
+        {
+            StoreCellViewModel viewModel = new StoreCellViewModel();
+            viewModel.SetItem((new Repository<StoreCell>()).Read(cellId));
+            viewModel.LastViewModel = this;
+            viewModel.ObjectSaved += StoreCellSaved;
+            ChangeViewModel(viewModel);
+        }
 
+        private void StoreCellSaved(object sender, EventArgs e)
+        {
+            StoreCell cell = sender as StoreCell;
+
+            StoreCell cellToReplace = Store.Cells.Where(c => c.Id == cell.Id).FirstOrDefault();
+            Store.Cells.Remove(cellToReplace);
+            Store.Cells.Add(cell);
+
+            FillCells(Store);
+        }
+
+        private void AddCell(int[] position)
+        {
+            StoreCell cell = new StoreCell()
+            {
+                Active = true,
+                ColumnsCount = 1,
+                RowsCount = 1,
+                IsVertical = false,
+                Name = "Новая группа",
+                Store = this.Store,
+                X = position[0],
+                Y = position[1]
+            };
+
+            StoreCellViewModel viewModel = new StoreCellViewModel();
+            viewModel.SetItem(cell);
+            viewModel.LastViewModel = this;
+            viewModel.ObjectSaved += StoreCellSaved;
+            ChangeViewModel(viewModel);
+        }
+
+        #endregion
+
+        #region Commands
+
+        #region EditCell
+
+        private StorageCommand editCellCommand;
+
+        public StorageCommand EditCellCommand
+        {
+            get
+            {
+                if (editCellCommand == null)
+                    editCellCommand = new StorageCommand(param => EditCell((int)param));
+                return editCellCommand;
+            }
+        }
+
+        #endregion
+
+        #region AddCell
+
+        private StorageCommand addCellCommand;
+
+        public StorageCommand AddCellCommand
+        {
+            get
+            {
+                if (addCellCommand == null)
+                    addCellCommand = new StorageCommand(param => AddCell((int[])param));
+                return addCellCommand;
+            }
+        }
+
+        #endregion
+
+        #endregion
     }
 }

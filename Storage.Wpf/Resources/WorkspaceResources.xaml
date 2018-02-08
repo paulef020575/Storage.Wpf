@@ -46,4 +46,7 @@
     <DataTemplate DataType="{x:Type local:RoadViewModel}">
         <local:EntityView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type local:StoreCellViewModel}">
+        <local:EntityView />
+    </DataTemplate>
 </ResourceDictionary>

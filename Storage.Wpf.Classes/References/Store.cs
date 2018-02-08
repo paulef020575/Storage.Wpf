@@ -45,5 +45,6 @@ namespace Storage.Wpf.Classes
             StoreGrade = new List<Grade>();
             Cells = new List<StoreCell>();
         }
+
     }
 }

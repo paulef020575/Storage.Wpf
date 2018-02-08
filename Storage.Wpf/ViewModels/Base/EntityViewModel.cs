@@ -59,6 +59,7 @@ namespace Storage.Wpf
         protected virtual void Save()
         {
             repository.Update(Entity);
+            OnObjectSaved();
             ClearModifiedState();
         }
 
@@ -67,6 +68,8 @@ namespace Storage.Wpf
             Save();
             CloseViewModel();
         }
+
+
 
         protected virtual void Close()
         {
@@ -142,6 +145,29 @@ namespace Storage.Wpf
                 return closeCommand;
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region Event handlers
+
+        #region Object saved
+
+        private EventHandler onObjectSaved;
+
+        public event EventHandler ObjectSaved
+        {
+            add { onObjectSaved += value; }
+            remove { onObjectSaved -= value; }
+        }
+
+        protected virtual void OnObjectSaved()
+        {
+            if (onObjectSaved != null)
+                onObjectSaved(Item, EventArgs.Empty);
+        }
+
 
         #endregion
 

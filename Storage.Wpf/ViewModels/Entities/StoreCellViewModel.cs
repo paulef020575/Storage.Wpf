@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Storage.Wpf.Classes;
+using Storage.Wpf.ViewModels.Base;
 
 namespace Storage.Wpf
 {
-    public class StoreCellViewModel : EntityViewModel<StoreCell>
+    public class StoreCellViewModel : EntityViewModel<StoreCell>, IGridCell
     {
         #region Properties
 
@@ -17,33 +18,41 @@ namespace Storage.Wpf
 
         public bool IsCell => (StoreCell != null);
 
+        public bool IsEmpty => (StoreCell == null);
+
         private int rowPosition;
 
         public int RowPosition
         {
-            get { return (StoreCell == null ? rowPosition : StoreCell.X); }
+            get { return (StoreCell == null ? rowPosition + 1 : StoreCell.X + 1); }
             set
             {
-                if (StoreCell != null && StoreCell.X != value)
+                if (StoreCell != null && StoreCell.X != value - 1)
                 {
-                    StoreCell.X = value;
+                    StoreCell.X = value - 1;
                     OnPropertyChanged("RowPosition");
                 }
             }
         }
 
         private int columnPosition;
+
         public int ColumnPosition
         {
-            get { return (StoreCell == null ? columnPosition : StoreCell.Y); }
+            get { return (StoreCell == null ? columnPosition + 1 : StoreCell.Y + 1); }
             set
             {
-                if (StoreCell != null && StoreCell.Y != value)
+                if (StoreCell != null && StoreCell.Y != value - 1)
                 {
-                    StoreCell.Y = value;
+                    StoreCell.Y = value - 1;
                     OnPropertyChanged("ColumnPosition");
                 }
             }
+        }
+
+        public int[] Position
+        {
+            get { return new[] {rowPosition, columnPosition}; }
         }
 
         public int Code
@@ -98,7 +107,46 @@ namespace Storage.Wpf
             }
         }
 
-        #endregion
+        public int RowsCount
+        {
+            get { return StoreCell.RowsCount; }
+            set
+            {
+                if (StoreCell.RowsCount != value)
+                {
+                    StoreCell.RowsCount = value;
+                    OnPropertyChanged("RowsCount");
+                }
+            }
+        }
+
+        public int ColumnsCount
+        {
+            get { return StoreCell.ColumnsCount; }
+            set
+            {
+                if (StoreCell.ColumnsCount != value)
+                {
+                    StoreCell.ColumnsCount = value;
+                    OnPropertyChanged("ColumnsCount");
+                }
+            }
+        }
+
+        public bool IsVertical
+        {
+            get { return StoreCell.IsVertical; }
+            set
+            {
+                if (StoreCell.IsVertical != value)
+                {
+                    StoreCell.IsVertical = value;
+                    OnPropertyChanged("IsVertical");
+                }
+            }
+        }
+
+    #endregion
 
         public StoreCellViewModel() { }
 
