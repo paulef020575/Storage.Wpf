@@ -11,5 +11,6 @@ namespace Storage.Wpf
     {
         Entity Item { get; }
         void SetItem(Entity item);
+        void SetItemForEdit(Entity item);
     }
 }

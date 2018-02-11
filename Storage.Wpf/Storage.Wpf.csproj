@@ -72,7 +72,7 @@
     </Compile>
     <Compile Include="ViewModels\Base\IGridCell.cs" />
     <Compile Include="ViewModels\ColumnHeaderClass.cs" />
-    <Compile Include="ViewModels\Entities\StoreCellViewModel.cs" />
+    <Compile Include="ViewModels\Base\StoreCellViewModel.cs" />
     <Compile Include="ViewModels\References\RefRoadViewModel.cs" />
     <Compile Include="ViewModels\RowHeaderClass.cs" />
     <Compile Include="Views\Base\GridHelper.cs" />

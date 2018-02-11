@@ -97,7 +97,7 @@ namespace Storage.Wpf
         {
             V view = new V();
             U item = Repository.Read(SelectedItem.Item.Id);
-            view.SetItem(item);
+            view.SetItemForEdit(item);
             view.LastViewModel = this;
             ChangeViewModel(view);
         }

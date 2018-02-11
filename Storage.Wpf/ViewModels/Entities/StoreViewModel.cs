@@ -298,9 +298,6 @@ namespace Storage.Wpf
         {
             get
             {
-                if (cells == null)
-                    FillCells(Store);
-
                 return cells;
             }
         }
@@ -309,13 +306,15 @@ namespace Storage.Wpf
 
         public int RowCount
         {
-            get { return rowCount + 1; }
+            get { return rowCount + 2; }
             set
             {
-                if (rowCount != value - 1)
+                if (rowCount != value - 2)
                 {
-                    rowCount = value - 1;
+                    rowCount = value - 2;
                     FillCells(Store);
+
+                    RedrawCells();
                 }
             }
         }
@@ -324,13 +323,14 @@ namespace Storage.Wpf
 
         public int ColumnCount
         {
-            get { return columnCount + 1; }
+            get { return columnCount + 2; }
             set
             {
-                if (columnCount != value - 1)
+                if (columnCount != value - 2)
                 {
-                    columnCount = value - 1;
+                    columnCount = value - 2;
                     FillCells(Store);
+                    RedrawCells();
                 }
             }
 
@@ -341,7 +341,7 @@ namespace Storage.Wpf
             get
             {
                 string s = "1";
-                for (int i = 1; i < ColumnCount; i++)
+                for (int i = 1; i < ColumnCount - 2; i++)
                     s += "," + (i + 1).ToString();
 
                 return s;
@@ -397,8 +397,10 @@ namespace Storage.Wpf
 
             for (int x = 0; x < rowCount; x++)
                 cells.Add(new RowHeaderClass(x + 1));
+
+            cells.Add(new RowHeaderClass(rowCount));
             
-            for (int y = 0; y < columnCount; y++)
+            for (int y = 0; y <= columnCount; y++)
                 cells.Add(new ColumnHeaderClass(y + 1));                            
 
             for (int x = 0; x < rowCount; x++)
@@ -410,11 +412,6 @@ namespace Storage.Wpf
 
                     cells.Add(viewModel);
                 }
-
-            OnPropertyChanged("RowCount");
-            OnPropertyChanged("ColumnCount");
-            OnPropertyChanged("Cells");
-            OnPropertyChanged("StarColumns");
 
         }
 
@@ -436,6 +433,12 @@ namespace Storage.Wpf
             Store.Cells.Add(cell);
 
             FillCells(Store);
+
+            OnPropertyChanged("RowCount");
+            OnPropertyChanged("ColumnCount");
+            OnPropertyChanged("Cells");
+            OnPropertyChanged("StarColumns");
+
         }
 
         private void AddCell(int[] position)
@@ -457,6 +460,30 @@ namespace Storage.Wpf
             viewModel.LastViewModel = this;
             viewModel.ObjectSaved += StoreCellSaved;
             ChangeViewModel(viewModel);
+        }
+
+        public override void SetItemForEdit(Entity item)
+        {
+            base.SetItem(item);
+            FillCells(Store);
+        }
+
+        private void RedrawCells()
+        {
+            OnPropertyChanged("Cells");
+            OnPropertyChanged("RowCount");
+            OnPropertyChanged("ColumnCount");
+            OnPropertyChanged("StarColumns");
+        }
+        
+        private void AddColumn()
+        {
+            ColumnCount++;
+        }
+
+        private void AddRow()
+        {
+            RowCount++;
         }
 
         #endregion

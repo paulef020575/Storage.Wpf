@@ -13,11 +13,28 @@ namespace Storage.Wpf
 
         public int ColumnPosition => 0;
 
+        public bool LastRow { get; private set; }
+
         public string Title => RowPosition.ToString();
 
         public RowHeaderClass(int rowPosition)
         {
             RowPosition = rowPosition;
+        }
+
+        private EventHandler onClick;
+
+        public event EventHandler Click
+        {
+            add
+            {
+                LastRow = true;
+                onClick += value;
+            }
+            remove {
+                LastRow = false;
+                onClick -= value; }
+
         }
     }
 }

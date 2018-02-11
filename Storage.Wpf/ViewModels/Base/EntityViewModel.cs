@@ -51,7 +51,12 @@ namespace Storage.Wpf
 
         #region Methods
 
-        public void SetItem(Entity item)
+        public virtual void SetItem(Entity item)
+        {
+            Entity = (T)item;
+        }
+
+        public virtual void SetItemForEdit(Entity item)
         {
             Entity = (T)item;
         }
