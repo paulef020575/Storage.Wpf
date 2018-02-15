@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Storage.Wpf.ViewModels.Base;
+using Storage.Wpf.Classes;
 
 namespace Storage.Wpf
 {
@@ -13,10 +14,14 @@ namespace Storage.Wpf
 
         public int RowPosition => 0;
 
-        public string Title
+        public bool LastColumn { get; private set; } = false;
+
+        public string Title 
         {
             get
             {
+                if (LastColumn) return "+";
+
                 string headers = " ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 return headers.Substring(ColumnPosition, 1);
             }
@@ -26,5 +31,36 @@ namespace Storage.Wpf
         {
             ColumnPosition = columnPosition;
         }
+
+        private EventHandler onClick;
+
+        public event EventHandler Click
+        {
+            add
+            {
+                LastColumn = true;
+                onClick += value;
+            }
+            remove
+            {
+                LastColumn = false;
+                onClick -= value;
+            }
+
+        }
+
+        private StorageCommand clickCommand;
+
+        public StorageCommand ClickCommand
+        {
+            get
+            {
+                if (clickCommand == null)
+                    clickCommand = new StorageCommand(param => onClick(this, EventArgs.Empty), param => LastColumn);
+
+                return clickCommand;
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Storage.Wpf.ViewModels.Base;
+using Storage.Wpf.Classes;
 
 namespace Storage.Wpf
 {
@@ -13,9 +14,9 @@ namespace Storage.Wpf
 
         public int ColumnPosition => 0;
 
-        public bool LastRow { get; private set; }
+        public bool LastRow { get; private set; } = false;
 
-        public string Title => RowPosition.ToString();
+        public string Title => (LastRow ? "+" : RowPosition.ToString());
 
         public RowHeaderClass(int rowPosition)
         {
@@ -31,10 +32,25 @@ namespace Storage.Wpf
                 LastRow = true;
                 onClick += value;
             }
-            remove {
+            remove
+            {
                 LastRow = false;
-                onClick -= value; }
+                onClick -= value;
+            }
 
+        }
+
+        private StorageCommand clickCommand;
+
+        public StorageCommand ClickCommand
+        {
+            get
+            {
+                if (clickCommand == null)
+                    clickCommand = new StorageCommand(param => onClick(this, EventArgs.Empty), param => LastRow);
+
+                return clickCommand;
+            }
         }
     }
 }

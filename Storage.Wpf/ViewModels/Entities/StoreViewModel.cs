@@ -298,7 +298,8 @@ namespace Storage.Wpf
         {
             get
             {
-                return cells;
+                if (cells == null) FillCells(0, 0);
+                    return cells;
             }
         }
 
@@ -306,16 +307,16 @@ namespace Storage.Wpf
 
         public int RowCount
         {
-            get { return rowCount + 2; }
+            get
+            {
+                if (cells == null)
+                    FillCells(0, 0);
+                return rowCount;
+            }
             set
             {
-                if (rowCount != value - 2)
-                {
-                    rowCount = value - 2;
-                    FillCells(Store);
-
-                    RedrawCells();
-                }
+                FillCells(value, ColumnCount);
+                RedrawCells();
             }
         }
 
@@ -323,15 +324,16 @@ namespace Storage.Wpf
 
         public int ColumnCount
         {
-            get { return columnCount + 2; }
+            get
+            {
+                if (cells == null)
+                    FillCells(0, 0);
+                return columnCount;
+            }
             set
             {
-                if (columnCount != value - 2)
-                {
-                    columnCount = value - 2;
-                    FillCells(Store);
-                    RedrawCells();
-                }
+                FillCells(RowCount, value);
+                RedrawCells();
             }
 
         }
@@ -340,6 +342,9 @@ namespace Storage.Wpf
         {
             get
             {
+                if (cells == null)
+                    FillCells(0, 0);
+
                 string s = "1";
                 for (int i = 1; i < ColumnCount - 2; i++)
                     s += "," + (i + 1).ToString();
@@ -388,31 +393,74 @@ namespace Storage.Wpf
             }
         }
 
-        private void FillCells(Store store)
+        private void FillCells(int newRowCount, int newColumnCount)
         {
-            if (rowCount == 0) rowCount = Store.Cells.Select(c => c.X).Max() + 1;
-            if (columnCount == 0) columnCount = Store.Cells.Select(c => c.Y).Max() + 1;
+            rowCount = newRowCount;
+            columnCount = newColumnCount;
 
-            cells = new ObservableCollection<IGridCell>();
+            if (rowCount == 0) rowCount = Store.Cells.Select(c => c.X).Max() + 3;
+            if (columnCount == 0) columnCount = Store.Cells.Select(c => c.Y).Max() + 3;
 
-            for (int x = 0; x < rowCount; x++)
-                cells.Add(new RowHeaderClass(x + 1));
+            cells = new ObservableCollection<ViewModels.Base.IGridCell>();
 
-            cells.Add(new RowHeaderClass(rowCount));
-            
-            for (int y = 0; y <= columnCount; y++)
-                cells.Add(new ColumnHeaderClass(y + 1));                            
+            for (int i = 1; i <= rowCount - 2; i++)
+                cells.Add(new RowHeaderClass(i));
+            RowHeaderClass lastRowHeader = new Wpf.RowHeaderClass(rowCount - 1);
+            lastRowHeader.Click += LastRowHeader_Click;
+            cells.Add(lastRowHeader);
 
-            for (int x = 0; x < rowCount; x++)
-                for (int y = 0; y < columnCount; y++)
+            for (int j = 1; j <= columnCount - 2; j++)
+                cells.Add(new ColumnHeaderClass(j));
+            ColumnHeaderClass lastColumnHeader = new ColumnHeaderClass(columnCount - 1);
+            lastColumnHeader.Click += LastColumnHeader_Click;
+            cells.Add(lastColumnHeader);
+
+            for (int i = 0; i < rowCount - 2; i++)
+                for (int j = 0; j < columnCount - 2; j++)
                 {
-                    StoreCellViewModel viewModel = new StoreCellViewModel(x, y);
-                    StoreCell cell = Store.Cells.Where(c => c.X == x && c.Y == y).FirstOrDefault();
+                    StoreCellViewModel viewModel = new StoreCellViewModel(i, j);
+                    StoreCell cell = Store.Cells.Where(c => c.X == i && c.Y == j).FirstOrDefault();
                     viewModel.SetItem(cell);
 
                     cells.Add(viewModel);
                 }
 
+
+            //if (rowCount == 0) rowCount = Store.Cells.Select(c => c.X).Max() + 1;
+            //if (columnCount == 0) columnCount = Store.Cells.Select(c => c.Y).Max() + 1;
+
+            //cells = new ObservableCollection<IGridCell>();
+
+            //for (int x = 0; x <= rowCount; x++)
+            //    cells.Add(new RowHeaderClass(x + 1));
+
+            //RowHeaderClass lastRowHeader = new RowHeaderClass(rowCount);
+            //lastRowHeader.Click += LastRowHeader_Click;
+            //cells.Add(lastRowHeader);
+            
+            //for (int y = 0; y <= columnCount; y++)
+            //    cells.Add(new ColumnHeaderClass(y + 1));                            
+
+            //for (int x = 0; x < rowCount; x++)
+            //    for (int y = 0; y < columnCount; y++)
+            //    {
+            //        StoreCellViewModel viewModel = new StoreCellViewModel(x, y);
+            //        StoreCell cell = Store.Cells.Where(c => c.X == x && c.Y == y).FirstOrDefault();
+            //        viewModel.SetItem(cell);
+
+            //        cells.Add(viewModel);
+            //    }
+
+        }
+
+        private void LastColumnHeader_Click(object sender, EventArgs e)
+        {
+            ColumnCount++;
+        }
+
+        private void LastRowHeader_Click(object sender, EventArgs e)
+        {
+            RowCount++;
         }
 
         private void EditCell(int cellId)
@@ -432,7 +480,7 @@ namespace Storage.Wpf
             Store.Cells.Remove(cellToReplace);
             Store.Cells.Add(cell);
 
-            FillCells(Store);
+            FillCells(RowCount, ColumnCount);
 
             OnPropertyChanged("RowCount");
             OnPropertyChanged("ColumnCount");
@@ -465,7 +513,6 @@ namespace Storage.Wpf
         public override void SetItemForEdit(Entity item)
         {
             base.SetItem(item);
-            FillCells(Store);
         }
 
         private void RedrawCells()

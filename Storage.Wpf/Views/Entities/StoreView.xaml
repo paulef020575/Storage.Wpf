@@ -41,7 +41,7 @@
                 <ItemsControl ItemsSource="{Binding Cells}" HorizontalAlignment="Stretch" >
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type local:StoreCellViewModel}">
-                            <Border BorderBrush="Black" BorderThickness="1" Margin="5" CornerRadius="8,8,3,3">
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="5" CornerRadius="3">
                                 <StackPanel Orientation="Vertical">
                                     <StackPanel.Style>
                                         <Style TargetType="StackPanel">
@@ -84,11 +84,11 @@
 
                         <DataTemplate DataType="{x:Type local:RowHeaderClass}">
                             <Border VerticalAlignment="Center"  Background="LightCyan" >
-                                <TextBlock Text ="{Binding Title}" Margin="5" TextAlignment="Center"/>
+                                <Button Content="{Binding Title}" Command="{Binding ClickCommand}" Margin="5" Background="LightCyan"/> 
                             </Border>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type local:ColumnHeaderClass}">
-                            <TextBlock Text="{Binding Title}" Margin="5" TextAlignment="Center" Background="LightCyan"/>
+                            <Button Content="{Binding Title}" Command="{Binding ClickCommand}" Margin="5" HorizontalAlignment="Center"  Background="LightCyan"/>
                         </DataTemplate>
                     </ItemsControl.Resources>
                     <ItemsControl.ItemsPanel>
