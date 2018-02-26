@@ -46,6 +46,14 @@ namespace Storage.Wpf
             };
         }
 
+        public static QuestionViewModel ConfirmDeletion(string title)
+        {
+            return new QuestionViewModel(title, ConfirmDeletionQuestion)
+            {
+                Buttons = YesButton | NoButton
+            };
+        }
+
         #region Choosing events
 
         private EventHandler onYesChoosed;
@@ -126,7 +134,9 @@ namespace Storage.Wpf
             => "В запись были внесены изменения. Сохранить их?";
 
         public static string ConfirmExitQuestion => "Закрыть программу?";
-        
+
+        public static string ConfirmDeletionQuestion => "Удалить объект?";
+
         #endregion
     }
 }

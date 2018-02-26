@@ -37,6 +37,8 @@
         </Grid>
 
         <TabControl Grid.Row="1" VerticalContentAlignment="Stretch">
+            
+            
             <TabItem Header="Структура склада" HorizontalContentAlignment="Stretch">
                 <ItemsControl ItemsSource="{Binding Cells}" HorizontalAlignment="Stretch" >
                     <ItemsControl.Resources>
@@ -76,6 +78,11 @@
                                                                     Path=DataContext.EditCellCommand}"
                                                 CommandParameter="{Binding StoreCell.Id}" 
                                                 Margin="5" Content="{icons:Material Pencil}" Background="Transparent"
+                                                Visibility="{Binding IsCell, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:StoreView}},
+                                                                    Path=DataContext.DeleteCellCommand}"
+                                                CommandParameter="{Binding}"
+                                                Margin="5" Content="{icons:Material Delete}" Background="Transparent"
                                                 Visibility="{Binding IsCell, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     </StackPanel>
                                 </StackPanel>

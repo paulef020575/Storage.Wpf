@@ -533,6 +533,23 @@ namespace Storage.Wpf
             RowCount++;
         }
 
+        private void DeleteCell(StoreCellViewModel cellViewModel)
+        {
+            QuestionViewModel viewModel = QuestionViewModel.ConfirmDeletion(cellViewModel.Title);
+            viewModel.YesChoosed += (sender, e) => { DeleteCellConfirmed(cellViewModel); };
+            viewModel.NoChoosed += (sender, e) => { ChangeViewModel(this); };
+            ChangeViewModel(viewModel);
+        }
+
+        private void DeleteCellConfirmed(StoreCellViewModel cellViewModel)
+        {
+            cellViewModel.DeleteCell();
+            Store.Cells.Remove(cellViewModel.StoreCell);
+            FillCells(RowCount, ColumnCount);
+            RedrawCells();
+            ChangeViewModel(this);
+        }
+
         #endregion
 
         #region Commands
@@ -564,6 +581,23 @@ namespace Storage.Wpf
                 if (addCellCommand == null)
                     addCellCommand = new StorageCommand(param => AddCell((int[])param));
                 return addCellCommand;
+            }
+        }
+
+        #endregion
+
+        #region DeleteCell
+
+        private StorageCommand deleteCellCommand;
+
+        public StorageCommand DeleteCellCommand
+        {
+            get
+            {
+                if (deleteCellCommand == null)
+                    deleteCellCommand = new StorageCommand(param => DeleteCell(param as StoreCellViewModel));
+
+                return deleteCellCommand;
             }
         }
 

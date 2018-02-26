@@ -156,6 +156,9 @@ namespace Storage.Wpf
             columnPosition = y;
         }
 
-
+        internal void DeleteCell()
+        {
+            repository.Delete(StoreCell);
+        }
     }
 }

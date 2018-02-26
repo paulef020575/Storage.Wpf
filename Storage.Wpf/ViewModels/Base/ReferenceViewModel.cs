@@ -104,14 +104,26 @@ namespace Storage.Wpf
 
         protected virtual void DeleteSelectedItem()
         {
-            if (System.Windows.MessageBox.Show("Удалить объект?", SelectedItem.Title, System.Windows.MessageBoxButton.YesNo)
-                == System.Windows.MessageBoxResult.Yes)
-            {
-                V view = SelectedItem;
-                List.Remove(view);
+            //if (System.Windows.MessageBox.Show("Удалить объект?", SelectedItem.Title, System.Windows.MessageBoxButton.YesNo)
+            //    == System.Windows.MessageBoxResult.Yes)
+            //{
+            //    V view = SelectedItem;
+            //    List.Remove(view);
 
-                Repository.Delete((U)view.Item);
-            }
+            //    Repository.Delete((U)view.Item);
+            //}
+
+            QuestionViewModel questionViewModel = QuestionViewModel.ConfirmDeletion(SelectedItem.Title);
+            questionViewModel.YesChoosed += (sender, e) => Remove(SelectedItem);
+            questionViewModel.NoChoosed += (sender, e) => ChangeViewModel(this);
+            ChangeViewModel(questionViewModel);
+        }
+
+        private void Remove(V item)
+        {
+            List.Remove(item);
+            Repository.Delete((U)item.Item);
+            ChangeViewModel(this);
         }
 
 
